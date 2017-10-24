@@ -36,6 +36,36 @@ class Board:
     def mergeActiveWithBoard(self):
         return self.addShape(self.active_block_position, self.active_block)
 
+    def collisionCheck(self, direction):
+        x_old, y_old = self.active_block_position
+
+        x_new = 0
+        y_new = 0
+        
+        if direction == 'down':
+            x_new = x_old
+            y_new = y_old+1
+        elif direction == 'left':
+            x_new = x_old - 1
+            y_new = y_old
+        elif direction == 'right':
+            x_new = x_old + 1
+            y_new = y_old
+
+        if x_new < 0:
+            return True
+        elif y_new+4 > self.BOARD_Y_HEIGHT:
+            return True
+        
+        shape = self.active_block
+        for xprime in range(4):
+            for yprime in range(4):
+                if self.board[y_new+yprime][x_new+xprime] > 0:
+                    if shape[yprime][xprime] > 0:
+                        return True
+        
+        return False
+
     def update(self):
         self.setActiveBlock(self.SHAPES['L-block'])
         b = self.mergeActiveWithBoard()
@@ -44,7 +74,7 @@ class Board:
 
         x_old, y_old = self.active_block_position
 
-        if y_old+4 == self.BOARD_Y_HEIGHT:
+        if self.collisionCheck('down'):
             # Merge this board permanent
             self.board = b
             
@@ -79,7 +109,7 @@ def main():
           ", built by Olof Sjödin and/or members of Qnarch")
 
     b = Board()
-    for i in range(21):
+    for i in range(41):
         b.update()
     
 
