@@ -41,9 +41,9 @@ class Board:
         b = self.mergeActiveWithBoard()
         self.printBoard(b)
 
-        # increment active block position
+
         x_old, y_old = self.active_block_position
-        print(str(x_old), str(y_old))
+
         if y_old+4 == self.BOARD_Y_HEIGHT:
             # Merge this board permanent
             self.board = b
@@ -51,6 +51,7 @@ class Board:
             # Reset position
             self.active_block_position = (self.X_SPAWN, self.Y_SPAWN)
         else:
+            # increment active block position
             self.active_block_position = (x_old, y_old+1)
         print()
 
