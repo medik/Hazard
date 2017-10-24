@@ -3,7 +3,7 @@ VERSION = "0.1"
 
 class Board:
     BOARD_X_WIDTH = 10
-    BOARD_Y_WIDTH = 20
+    BOARD_Y_HEIGHT = 20
     NULL_BLOCK = 0
     SHAPES = { 'L-block': [ [1, 0, 0, 0],
                             [1, 0, 0, 0],
@@ -20,7 +20,7 @@ class Board:
         self.active_block = None
         self.active_block_position = (0, 0)
         
-        for y_i in range(self.BOARD_Y_WIDTH):
+        for y_i in range(self.BOARD_Y_HEIGHT):
             x_arr = []
             for x_i in range(self.BOARD_X_WIDTH):
                 x_arr.append(self.NULL_BLOCK)
