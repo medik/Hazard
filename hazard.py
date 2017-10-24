@@ -14,16 +14,17 @@ class Board:
         # Build tetris board with origo at top left corner
         # Assume that x and y are the horizontal and vertical respectively
         # Assume that x=10 and y=20
-        # Let self.board[x][y] contain the block
+        # Let self.board[y][x] contain the block
         
         self.board = []
         self.active_block = None
-        self.active_block_position = (0,0)
+        self.active_block_position = (0, 0)
         
-        for x in range(self.BOARD_X_WIDTH):
-            self.board.append([])
-            for y in range(self.BOARD_Y_WIDTH):
-                self.board[x].append(self.NULL_BLOCK)
+        for y_i in range(self.BOARD_Y_WIDTH):
+            x_arr = []
+            for x_i in range(self.BOARD_X_WIDTH):
+                x_arr.append(self.NULL_BLOCK)
+            self.board.append(x_arr[:])
 
     def setActiveBlock(self, shape):
         self.active_block = shape
@@ -35,9 +36,10 @@ class Board:
         self.setActiveBlock(self.SHAPES['L-block'])
         b = self.mergeActiveWithBoard()
         self.printBoard(b)
+
         # increment active block position
         x_old, y_old = self.active_block_position
-        self.active_block_position = (x_old+1, y_old)
+        self.active_block_position = (x_old, y_old+1)
         print()
 
     def addShape(self, position, shape):
@@ -45,17 +47,17 @@ class Board:
         
         # Assume the shape size is 4x4
         temp = copy.deepcopy(self.board)
-        
+
         for xprime in range(4):
             for yprime in range(4):
-                temp[x+xprime][y+yprime] = shape[xprime][yprime]
+                temp[y+yprime][x+xprime] = shape[yprime][xprime]
         return temp
 
     def printBoard(self, board):
-        for x_row in board:
+        for y_row in board:
             temp = ""
-            for y_col in x_row:
-                temp += str(y_col)
+            for item in y_row:
+                temp += str(item)
             print(temp)
         
 
@@ -66,6 +68,8 @@ def main():
     b = Board()
     for i in range(3):
         b.update()
+    
+
 
 if __name__ == "__main__":
     main()
