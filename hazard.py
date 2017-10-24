@@ -18,28 +18,61 @@ class Board:
 
     X_SPAWN = 0
     Y_SPAWN = 0
-    
+
     NULL_BLOCK = 0
     SHAPES = { 'L-block': [ [0, 0, 0, 0],
                             [1, 0, 0, 0],
                             [1, 0, 0, 0],
                             [1, 1, 0, 0]]}
-    
+
     def __init__(self):
+        # Create all blocks
+        self.initialiseBlocks()
+
         # Build tetris board with origo at top left corner
         # Assume that x and y are the horizontal and vertical respectively
         # Assume that x=10 and y=20
         # Let self.board[y][x] contain the block
-        
+
         self.board = []
         self.active_block = None
         self.active_block_position = (self.X_SPAWN, self.Y_SPAWN)
-        
+
         for y_i in range(self.BOARD_Y_HEIGHT):
             x_arr = []
             for x_i in range(self.BOARD_X_WIDTH):
                 x_arr.append(self.NULL_BLOCK)
             self.board.append(x_arr[:])
+
+    def initialiseBlocks(self):
+        self.blocks = {}
+
+        # Create L-block
+
+        shape_L_1 = [   [0, 0, 0, 0],
+                        [1, 0, 0, 0],
+                        [1, 0, 0, 0],
+                        [1, 1, 0, 0]]
+
+        shape_L_2 = [   [0, 0, 0, 0],
+                        [0, 0, 0, 0],
+                        [0, 0, 1, 0],
+                        [1, 1, 1, 0]]
+
+        shape_L_3 = [   [0, 0, 0, 0],
+                        [0, 1, 1, 0],
+                        [0, 0, 1, 0],
+                        [0, 0, 1, 0]]
+
+        shape_L_4 = [   [0, 0, 0, 0],
+                        [0, 0, 0, 0],
+                        [1, 1, 1, 0],
+                        [1, 0, 0, 0]]
+
+        shapes = [shape_L_1, shape_L_2, shape_L_3, shape_L_4]
+
+        self.blocks['L-block'] = Block(shapes)
+
 
     def setActiveBlock(self, shape):
         self.active_block = shape
@@ -52,7 +85,7 @@ class Board:
 
         x_new = 0
         y_new = 0
-        
+
         if direction == 'down':
             x_new = x_old
             y_new = y_old+1
@@ -67,14 +100,14 @@ class Board:
             return True
         elif y_new+4 > self.BOARD_Y_HEIGHT:
             return True
-        
+
         shape = self.active_block
         for xprime in range(4):
             for yprime in range(4):
                 if self.board[y_new+yprime][x_new+xprime] > 0:
                     if shape[yprime][xprime] > 0:
                         return True
-        
+
         return False
 
     def update(self):
@@ -88,7 +121,7 @@ class Board:
         if self.collisionCheck('down'):
             # Merge this board permanent
             self.board = b
-            
+
             # Reset position
             self.active_block_position = (self.X_SPAWN, self.Y_SPAWN)
         else:
@@ -98,7 +131,7 @@ class Board:
 
     def addShape(self, position, shape):
         x, y = position
-        
+
         # Assume the shape size is 4x4
         temp = copy.deepcopy(self.board)
 
@@ -113,7 +146,7 @@ class Board:
             for item in y_row:
                 temp += str(item)
             print(temp)
-        
+
 
 def main():
     print("Starting Hazard Game Server " + VERSION +
@@ -122,7 +155,7 @@ def main():
     b = Board()
     for i in range(41):
         b.update()
-    
+
 
 
 if __name__ == "__main__":
