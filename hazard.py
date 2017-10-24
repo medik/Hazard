@@ -78,7 +78,7 @@ class Board:
         self.active_block = shape
 
     def mergeActiveWithBoard(self):
-        return self.addShape(self.active_block_position, self.active_block)
+        return self.addShape(self.active_block_position, self.active_block.getBlock())
 
     def collisionCheck(self, direction):
         x_old, y_old = self.active_block_position
@@ -101,7 +101,7 @@ class Board:
         elif y_new+4 > self.BOARD_Y_HEIGHT:
             return True
 
-        shape = self.active_block
+        shape = self.active_block.getBlock()
         for xprime in range(4):
             for yprime in range(4):
                 if self.board[y_new+yprime][x_new+xprime] > 0:
@@ -111,7 +111,7 @@ class Board:
         return False
 
     def update(self):
-        self.setActiveBlock(self.blocks['L-block'].getBlock())
+        self.setActiveBlock(self.blocks['L-block'])
         b = self.mergeActiveWithBoard()
         self.printBoard(b)
 
