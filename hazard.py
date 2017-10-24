@@ -10,7 +10,7 @@ class Block:
         self.rotation_index = (self.rotation_index + 1) % len(self.rotations)
 
     def getBlock(self):
-        return self.rotation[self.rotation_index]
+        return self.rotations[self.rotation_index]
 
 class Board:
     BOARD_X_WIDTH = 10
@@ -111,7 +111,7 @@ class Board:
         return False
 
     def update(self):
-        self.setActiveBlock(self.SHAPES['L-block'])
+        self.setActiveBlock(self.blocks['L-block'].getBlock())
         b = self.mergeActiveWithBoard()
         self.printBoard(b)
 
