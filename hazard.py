@@ -1,10 +1,11 @@
+import copy
 VERSION = "0.1"
 
 class Board:
     BOARD_X_WIDTH = 10
     BOARD_Y_WIDTH = 20
     NULL_BLOCK = 0
-    SHAPES = { 'L-shape': [ [1, 0, 0, 0],
+    SHAPES = { 'L-block': [ [1, 0, 0, 0],
                             [1, 0, 0, 0],
                             [1, 1, 0, 0],
                             [0, 0, 0, 0]]}
@@ -28,21 +29,30 @@ class Board:
         self.active_block = shape
 
     def mergeActiveWithBoard(self):
-        self.addShape(self.active_block_position, self.active_block)
+        return self.addShape(self.active_block_position, self.active_block)
+
+    def update(self):
+        self.setActiveBlock(self.SHAPES['L-block'])
+        b = self.mergeActiveWithBoard()
+        self.printBoard(b)
+        # increment active block position
+        x_old, y_old = self.active_block_position
+        self.active_block_position = (x_old+1, y_old)
+        print()
 
     def addShape(self, position, shape):
         x, y = position
         
         # Assume the shape size is 4x4
-        copy = list(self.board)
+        temp = copy.deepcopy(self.board)
         
         for xprime in range(4):
             for yprime in range(4):
-                copy[x+xprime][y+yprime] = shape[xprime][yprime]
-        self.board = copy 
+                temp[x+xprime][y+yprime] = shape[xprime][yprime]
+        return temp
 
-    def printBoard(self):
-        for x_row in self.board:
+    def printBoard(self, board):
+        for x_row in board:
             temp = ""
             for y_col in x_row:
                 temp += str(y_col)
@@ -54,10 +64,8 @@ def main():
           ", built by Olof Sjödin and/or members of Qnarch")
 
     b = Board()
-    #b.addShape((0,0), b.SHAPES['L-shape'])
-    b.setActiveBlock(b.SHAPES['L-shape'])
-    b.mergeActiveWithBoard()
-    b.printBoard()
+    for i in range(3):
+        b.update()
 
 if __name__ == "__main__":
     main()
