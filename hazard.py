@@ -4,11 +4,15 @@ VERSION = "0.1"
 class Board:
     BOARD_X_WIDTH = 10
     BOARD_Y_HEIGHT = 20
+
+    X_SPAWN = 0
+    Y_SPAWN = 0
+    
     NULL_BLOCK = 0
-    SHAPES = { 'L-block': [ [1, 0, 0, 0],
+    SHAPES = { 'L-block': [ [0, 0, 0, 0],
                             [1, 0, 0, 0],
-                            [1, 1, 0, 0],
-                            [0, 0, 0, 0]]}
+                            [1, 0, 0, 0],
+                            [1, 1, 0, 0]]}
     
     def __init__(self):
         # Build tetris board with origo at top left corner
@@ -18,7 +22,7 @@ class Board:
         
         self.board = []
         self.active_block = None
-        self.active_block_position = (0, 0)
+        self.active_block_position = (self.X_SPAWN, self.Y_SPAWN)
         
         for y_i in range(self.BOARD_Y_HEIGHT):
             x_arr = []
@@ -39,7 +43,15 @@ class Board:
 
         # increment active block position
         x_old, y_old = self.active_block_position
-        self.active_block_position = (x_old, y_old+1)
+        print(str(x_old), str(y_old))
+        if y_old+4 == self.BOARD_Y_HEIGHT:
+            # Merge this board permanent
+            self.board = b
+            
+            # Reset position
+            self.active_block_position = (self.X_SPAWN, self.Y_SPAWN)
+        else:
+            self.active_block_position = (x_old, y_old+1)
         print()
 
     def addShape(self, position, shape):
@@ -66,7 +78,7 @@ def main():
           ", built by Olof Sjödin and/or members of Qnarch")
 
     b = Board()
-    for i in range(3):
+    for i in range(21):
         b.update()
     
 
