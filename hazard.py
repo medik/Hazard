@@ -1,6 +1,17 @@
 import copy
 VERSION = "0.1"
 
+class Block:
+    def __init__(self, rot):
+        self.rotation_index = 0
+        self.rotations = rot
+
+    def rotate(self):
+        self.rotation_index = (self.rotation_index + 1) % len(self.rotations)
+
+    def getBlock(self):
+        return self.rotation[self.rotation_index]
+
 class Board:
     BOARD_X_WIDTH = 10
     BOARD_Y_HEIGHT = 20
