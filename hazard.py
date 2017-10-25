@@ -179,7 +179,7 @@ class Board:
 
         for xprime in range(4):
             for yprime in range(4):
-                temp[y+yprime][x+xprime] = shape[yprime][xprime]
+                temp[y+yprime][x+xprime] = temp[y+yprime][x+xprime] + shape[yprime][xprime]
         return temp
 
     def printBoard(self, board):
