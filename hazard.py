@@ -125,7 +125,7 @@ class Board:
                      [1, 1, 0, 0],
                      [1, 0, 0, 0]]
 
-        shapes = [shape_Z_2, shape_Z_1]
+        shapes = [shape_Z_1, shape_Z_2]
 
         self.blocks['Z-block'] = Block(shapes)
 
