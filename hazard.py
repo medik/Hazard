@@ -249,7 +249,7 @@ class Board:
             self.active_block_position = (self.X_SPAWN, self.Y_SPAWN)
         else:
             # increment active block position
-            self.active_block_position = (x_old, y_old+1)
+            self.active_block_position = self.getNewXYCoordinateWithDirection('down')
         print()
 
     def addShape(self, position, shape):
