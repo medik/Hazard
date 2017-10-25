@@ -99,6 +99,22 @@ class Board:
 
         self.blocks['RevL-block'] = Block(shapes)
 
+        # Create I-block
+
+        shape_Long_1 = [[1, 0, 0, 0],
+                        [1, 0, 0, 0],
+                        [1, 0, 0, 0],
+                        [1, 0, 0, 0]]
+
+        shape_Long_2 = [[0, 0, 0, 0],
+                        [0, 0, 0, 0],
+                        [1, 1, 1, 1],
+                        [0, 0, 0, 0]]
+
+        shapes = [shape_Long_1, shape_Long_2]
+
+        self.blocks['I-block'] = Block(shapes)
+
 
     def setActiveBlock(self, shape):
         self.active_block = shape
@@ -137,7 +153,7 @@ class Board:
         return False
 
     def update(self):
-        self.setActiveBlock(self.blocks['RevL-block'])
+        self.setActiveBlock(self.blocks['I-block'])
         b = self.mergeActiveWithBoard()
         self.printBoard(b)
 
