@@ -190,7 +190,7 @@ class Board:
     def mergeActiveWithBoard(self):
         return self.addShape(self.active_block_position, self.active_block.getBlock())
 
-    def collisionCheck(self, direction):
+    def getNewXYCoordinateWithDirection(self, direction):
         x_old, y_old = self.active_block_position
 
         x_new = 0
@@ -205,6 +205,11 @@ class Board:
         elif direction == 'right':
             x_new = x_old + 1
             y_new = y_old
+
+        return x_new, y_new
+
+    def collisionCheck(self, direction):
+        x_new, y_new = self.getNewXYCoordinateWithDirection(direction)
 
         if x_new < 0:
             return True
