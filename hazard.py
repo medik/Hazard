@@ -188,6 +188,9 @@ class Board:
         self.active_block = shape
 
     def mergeActiveWithBoard(self):
+        """
+        Merges the active block with the board. Returns the resulting board.
+        """
         return self.addShape(self.active_block_position, self.active_block.getBlock())
 
     def traverse(self, direction):
