@@ -20,10 +20,6 @@ class Board:
     Y_SPAWN = 0
 
     NULL_BLOCK = 0
-    SHAPES = { 'L-block': [ [0, 0, 0, 0],
-                            [1, 0, 0, 0],
-                            [1, 0, 0, 0],
-                            [1, 1, 0, 0]]}
 
     def __init__(self):
         # Create all blocks
