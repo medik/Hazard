@@ -129,6 +129,20 @@ class Board:
 
         self.blocks['Z-block'] = Block(shapes)
 
+        shape_RevZ_1 = [[0, 0, 0, 0],
+                        [0, 0, 0, 0],
+                        [0, 1, 1, 0],
+                        [1, 1, 0, 0]]
+
+        shape_RevZ_2 = [[0, 0, 0, 0],
+                        [1, 0, 0, 0],
+                        [1, 1, 0, 0],
+                        [0, 1, 0, 0]]
+
+        shapes = [shape_RevZ_1, shape_RevZ_2]
+
+        self.blocks['RevZ-block'] = Block(shapes)
+
 
     def setActiveBlock(self, shape):
         self.active_block = shape
