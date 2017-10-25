@@ -73,6 +73,32 @@ class Board:
 
         self.blocks['L-block'] = Block(shapes)
 
+        # Create Reverse L-block
+
+        shape_RevL_1 = [[0, 0, 0, 0],
+                        [0, 1, 0, 0],
+                        [0, 1, 0, 0],
+                        [1, 1, 0, 0]]
+
+        shape_RevL_2 = [[0, 0, 0, 0],
+                        [0, 0, 0, 0],
+                        [1, 1, 1, 0],
+                        [0, 0, 1, 0]]
+
+        shape_RevL_3 = [[0, 0, 0, 0],
+                        [0, 1, 1, 0],
+                        [0, 1, 0, 0],
+                        [0, 1, 0, 0]]
+
+        shape_RevL_4 = [[0, 0, 0, 0],
+                        [0, 0, 0, 0],
+                        [0, 0, 1, 0],
+                        [1, 1, 1, 0]]
+
+        shapes = [shape_RevL_1, shape_RevL_2, shape_RevL_3, shape_RevL_4]
+
+        self.blocks['RevL-block'] = Block(shapes)
+
 
     def setActiveBlock(self, shape):
         self.active_block = shape
@@ -111,7 +137,7 @@ class Board:
         return False
 
     def update(self):
-        self.setActiveBlock(self.blocks['L-block'])
+        self.setActiveBlock(self.blocks['RevL-block'])
         b = self.mergeActiveWithBoard()
         self.printBoard(b)
 
