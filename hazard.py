@@ -169,7 +169,7 @@ class Board:
                      [1, 1, 0, 0],
                      [0, 1, 0, 0]]
 
-        shapes = [shape_RevL_1, shape_RevL_2, shape_RevL_3, shape_RevL_4]
+        shapes = [shape_T_1, shape_T_2, shape_T_3, shape_T_4]
 
         self.blocks['T-block'] = Block(shapes)
 
