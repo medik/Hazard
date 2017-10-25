@@ -115,6 +115,8 @@ class Board:
 
         self.blocks['I-block'] = Block(shapes)
 
+        # Create Z-block
+
         shape_Z_1 = [[0, 0, 0, 0],
                      [0, 0, 0, 0],
                      [1, 1, 0, 0],
@@ -128,6 +130,8 @@ class Board:
         shapes = [shape_Z_1, shape_Z_2]
 
         self.blocks['Z-block'] = Block(shapes)
+
+        # Create Reverse Z-block
 
         shape_RevZ_1 = [[0, 0, 0, 0],
                         [0, 0, 0, 0],
