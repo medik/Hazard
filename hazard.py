@@ -190,6 +190,14 @@ class Board:
     def mergeActiveWithBoard(self):
         return self.addShape(self.active_block_position, self.active_block.getBlock())
 
+    def traverse(self, direction):
+        """
+        Will traverse the active block iff the direction won't collide. The
+        possible directions are: 'left', 'down' and 'right'.
+        """
+        if not self.collisionCheck(direction):
+            self.active_block_position = self.getNewXYCoordinateWithDirection(direction)
+
     def getNewXYCoordinateWithDirection(self, direction):
         x_old, y_old = self.active_block_position
 
