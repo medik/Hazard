@@ -1,6 +1,9 @@
 import copy
 VERSION = "0.1"
 
+class Action:
+    def applyAction(self, board): pass
+
 class Block:
     def __init__(self, rot):
         self.rotation_index = 0
