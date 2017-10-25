@@ -169,6 +169,17 @@ class Board:
 
         self.blocks['T-block'] = Block(shapes)
 
+        # Create Square block
+
+        shape_Square = [[0, 0, 0, 0],
+                        [0, 0, 0, 0],
+                        [1, 1, 0, 0],
+                        [1, 1, 0, 0]]
+
+        shapes = [shape_Square]
+
+        self.blocks['S-block'] = Block(shapes)
+
 
     def setActiveBlock(self, shape):
         self.active_block = shape
@@ -207,7 +218,7 @@ class Board:
         return False
 
     def update(self):
-        self.setActiveBlock(self.blocks['I-block'])
+        self.setActiveBlock(self.blocks['S-block'])
         b = self.mergeActiveWithBoard()
         self.printBoard(b)
 
