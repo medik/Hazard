@@ -143,6 +143,32 @@ class Board:
 
         self.blocks['RevZ-block'] = Block(shapes)
 
+        # Create T-block
+
+        shape_T_1 = [[0, 0, 0, 0],
+                     [0, 0, 0, 0],
+                     [1, 1, 1, 0],
+                     [0, 1, 0, 0]]
+
+        shape_T_2 = [[0, 0, 0, 0],
+                     [1, 0, 0, 0],
+                     [1, 1, 0, 0],
+                     [1, 0, 0, 0]]
+
+        shape_T_3 = [[0, 0, 0, 0],
+                     [0, 0, 0, 0],
+                     [0, 1, 0, 0],
+                     [1, 1, 1, 0]]
+
+        shape_T_4 = [[0, 0, 0, 0],
+                     [0, 1, 0, 0],
+                     [1, 1, 0, 0],
+                     [0, 1, 0, 0]]
+
+        shapes = [shape_RevL_1, shape_RevL_2, shape_RevL_3, shape_RevL_4]
+
+        self.blocks['T-block'] = Block(shapes)
+
 
     def setActiveBlock(self, shape):
         self.active_block = shape
