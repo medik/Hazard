@@ -286,6 +286,9 @@ class Board:
         return temp
 
     def printBoard(self, board):
+        """
+        Prints the board to the terminal.
+        """
         for y_row in board:
             temp = ""
             for item in y_row:
