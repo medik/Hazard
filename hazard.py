@@ -205,6 +205,10 @@ class Board:
             self.active_block_position = self.getNewXYCoordinateWithDirection(direction)
 
     def getNewXYCoordinateWithDirection(self, direction):
+        """
+        Takes a direction of type string with the possible values 'left',
+        'down' and 'right. Returns a tuple with the new x and y coordinate.
+        """
         x_old, y_old = self.active_block_position
 
         x_new = 0
