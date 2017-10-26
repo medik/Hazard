@@ -185,6 +185,9 @@ class Board:
 
 
     def setActiveBlock(self, shape):
+        """
+        Takes the parameter shape of class "Shape" and sets the active block to it.
+        """
         self.active_block = shape
 
     def mergeActiveWithBoard(self):
