@@ -272,6 +272,9 @@ class Board:
         print()
 
     def addShape(self, position, shape):
+        """
+        Adds a shape onto the board with a given position (which is a tuple of x, y).
+        """
         x, y = position
 
         # Assume the shape size is 4x4
