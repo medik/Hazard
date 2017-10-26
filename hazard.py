@@ -227,6 +227,11 @@ class Board:
         return x_new, y_new
 
     def collisionCheck(self, direction):
+        """
+        Does a collision check for a given direction with the possible
+        values 'left', 'down' and right. Returns True if there is a
+        collision otherwise False.
+        """
         x_new, y_new = self.getNewXYCoordinateWithDirection(direction)
 
         if x_new < 0:
