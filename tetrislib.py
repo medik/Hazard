@@ -16,7 +16,10 @@ class Movement(Action):
         self.direction = d
 
     def applyAction(self, board):
-        board.traverse(self.direction)
+        if self.direction == "hard_drop":
+            board.doHardDrop()
+        else:
+            board.traverse(self.direction)
         self.action_completed = True
 
 class Block:
