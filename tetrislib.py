@@ -367,7 +367,7 @@ class Board:
             if not yprime in int_arr:
                 temp.append(self.board[yprime])
 
-        return temp
+        self.fillNullRowsFromTop(temp, len(int_arr))
 
     def update(self):
         """
