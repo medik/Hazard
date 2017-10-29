@@ -281,15 +281,18 @@ class Board:
         collision otherwise False.
         """
         x_new, y_new = self.getNewXYCoordinateWithDirection(direction)
+        active_x_size, active_y_size = self.active_block.getSize()
 
         if x_new < 0:
             return True
-        elif y_new+4 > self.BOARD_Y_HEIGHT:
+        elif x_new + active_x_size > self.BOARD_X_WIDTH:
+            return True
+        elif y_new + active_y_size > self.BOARD_Y_HEIGHT:
             return True
 
         shape = self.active_block.getBlock()
-        for xprime in range(4):
-            for yprime in range(4):
+        for xprime in range(active_x_size):
+            for yprime in range(active_y_size):
                 if self.board[y_new+yprime][x_new+xprime] > 0:
                     if shape[yprime][xprime] > 0:
                         return True
