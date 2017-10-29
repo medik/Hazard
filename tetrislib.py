@@ -257,7 +257,8 @@ class Board:
         """
         Take a string parameter and retrieve the shape from the dictionary containing all the shapes.
         """
-        self.active_block = self.blocks[shape_n]
+        temp = copy.deepcopy(self.blocks[shape_n])
+        self.active_block = temp
 
     def setActiveBlock(self, shape):
         """
