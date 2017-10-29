@@ -10,6 +10,9 @@ class Block:
         self.rotations = rot
 
     def rotate(self):
+        """
+        Rotate the block counterclockwise
+        """
         self.rotation_index = (self.rotation_index + 1) % len(self.rotations)
 
     def getBlock(self):
