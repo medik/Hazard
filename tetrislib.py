@@ -48,7 +48,7 @@ class Block:
 
     def getNextRotation(self):
         return self.rotations[(self.rotation_index + 1) % len(self.rotations)]
-    
+
     def getSize(self):
         # Assume that we are measuring the current rotation
         temp = self.rotations[self.rotation_index]
@@ -255,6 +255,16 @@ class Board:
         self.active_block = shape
 
     def rotateActive(self):
+        x_o, y_o = self.active_block_position
+        x_block_size, y_block_size = self.active_block.getSize()
+        x_right_marginal = self.BOARD_X_WIDTH - x_o
+
+        # If the marginal isn't enough, correct the postion with the difference
+        if x_right_marginal < y_block_size:
+            x_new = x_o - (y_block_size-x_right_marginal)
+            y_new = y_o
+            self.active_block_position = (x_new, y_new)
+
         self.active_block.rotate()
 
     def traverse(self, direction):
