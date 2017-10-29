@@ -11,15 +11,17 @@ class Action:
         pass
 
 class Movement(Action):
-    def __init__(self, d):
+    def __init__(self, d, rep=1):
         super()
         self.direction = d
+        self.repeat = rep
 
     def applyAction(self, board):
-        if self.direction == "hard_drop":
-            board.doHardDrop()
-        else:
-            board.traverse(self.direction)
+        for i in range(self.repeat):
+            if self.direction == "hard_drop":
+                board.doHardDrop()
+            else:
+                board.traverse(self.direction)
         self.action_completed = True
 
 class Block:
