@@ -279,6 +279,9 @@ class Board:
         return temp
 
     def applyAction(self, action):
+        """
+        Takes the parameter action and call the applyAction method with reference to this instance.
+        """
         action.applyAction(self)
 
     def collisionCheck(self, direction):
