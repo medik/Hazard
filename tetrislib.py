@@ -332,6 +332,17 @@ class Board:
                 temp += str(item)
             print(temp)
 
+    def removeRows(self, int_arr):
+        """
+        Takes an array of integers and remove it from the board.
+        """
+        temp = []
+        for yprime in range(self.BOARD_Y_HEIGHT):
+            if not yprime in int_arr:
+                temp.append(self.board[yprime])
+
+        return temp
+
     def update(self):
         """
         This method's purpose is to determine whether the active block
