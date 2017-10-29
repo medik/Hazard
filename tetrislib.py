@@ -204,10 +204,8 @@ class Board:
 
         # Create Square block
 
-        shape_Square = [[0, 0, 0, 0],
-                        [0, 0, 0, 0],
-                        [1, 1, 0, 0],
-                        [1, 1, 0, 0]]
+        shape_Square = [[1, 1],
+                        [1, 1]]
 
         shapes = [shape_Square]
 
