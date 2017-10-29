@@ -241,6 +241,17 @@ class Board:
 
         return x_new, y_new
 
+    def getNumberOfNonZeroesForEachRow(self):
+        ret = []
+
+        for y_i in range(self.BOARD_Y_HEIGHT):
+            non_zeroes_count = 0
+            for x_i in range(self.BOARD_X_WIDTH):
+                if self.board[y_i][x_i] > 0:
+                    non_zeroes_count += 1
+            ret.append(non_zeroes_count)
+
+        return ret
     # Set methods
     def setActiveBlockFromString(self, shape_n):
         """
