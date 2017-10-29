@@ -26,6 +26,15 @@ class Movement(Action):
                 board.traverse(self.direction)
         self.action_completed = True
 
+class SetBlock(Action):
+    def __init__(self, b):
+        super()
+        self.block = b
+
+    def applyAction(self, board):
+        board.setActiveBlockFromString(self.block)
+        self.action_completed = True
+
 class Block:
     def __init__(self, rot):
         self.rotation_index = 0
