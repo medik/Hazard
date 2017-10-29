@@ -267,7 +267,6 @@ class Board:
         This method's purpose is to determine whether the active block
         should merge to the static one. Runs for each 'tick'.
         """
-        self.setActiveBlock(self.blocks['S-block'])
         b = self.mergeActiveWithBoard()
         self.printBoard(b)
 
@@ -315,6 +314,7 @@ def main():
           ", built by Olof Sjödin and/or members of Qnarch")
 
     b = Board()
+    b.setActiveBlockFromString("S-block")
     for i in range(41):
         b.update()
 
