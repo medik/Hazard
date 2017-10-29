@@ -327,6 +327,21 @@ class Board:
         while self.collisionCheck("down") == False:
             self.traverse("down")
 
+    def fillNullRowsFromTop(self, board, n):
+        """
+        Adding null blocks from the top of the board.
+        """
+        temp = []
+        for y_i in range(n):
+            x_arr = []
+            for x_i in range(self.BOARD_X_WIDTH):
+                x_arr.append(self.NULL_BLOCK)
+            temp.append(x_arr[:])
+
+        temp.extend(board)
+
+        self.board = temp
+
     def mergeActiveWithBoard(self):
         """
         Merges the active block with the board. Returns the resulting board.
