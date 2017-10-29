@@ -187,6 +187,12 @@ class Board:
         self.blocks['S-block'] = Block(shapes)
 
 
+    def setActiveBlockFromString(self, shape_n):
+        """
+        Take a string parameter and retrieve the shape from the dictionary containing all the shapes.
+        """
+        self.active_block = self.blocks[shape_n]
+        
     def setActiveBlock(self, shape):
         """
         Takes the parameter shape of class "Shape" and sets the active block to it.
