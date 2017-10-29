@@ -210,6 +210,10 @@ class Board:
         """
         return self.addShape(self.active_block_position, self.active_block.getBlock())
 
+    def doHardDrop(self):
+        while self.collisionCheck("down") == False:
+            self.traverse("down")
+
     def traverse(self, direction):
         """
         Will traverse the active block iff the direction won't collide. The
