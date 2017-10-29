@@ -1,6 +1,9 @@
 import copy
 
 class Action:
+    def __init__(self):
+        self.action_completed = False
+
     def applyAction(self, board): pass
 
 class Block:
