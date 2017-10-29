@@ -47,9 +47,10 @@ class Block:
         self.rotation_index = (self.rotation_index + 1) % len(self.rotations)
 
     def getSize(self):
-        # Assume that all rotations are of same size
-        y_ret = len(self.rotations[0])
-        x_ret = len(self.rotations[0][0])
+        # Assume that we are measuring the current rotation
+        temp = self.rotations[self.rotation_index]
+        y_ret = len(temp)
+        x_ret = len(temp[0])
 
         return x_ret, y_ret
 
