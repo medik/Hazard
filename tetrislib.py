@@ -4,7 +4,11 @@ class Action:
     def __init__(self):
         self.action_completed = False
 
-    def applyAction(self, board): pass
+    def applyAction(self, board):
+        """
+        Do stuff then set action_completed to True
+        """
+        pass
 
 class Block:
     def __init__(self, rot):
