@@ -307,6 +307,9 @@ class Board:
         return False
 
     def doHardDrop(self):
+        """
+        Makes the active block go directly to the bottom of the board.
+        """
         while self.collisionCheck("down") == False:
             self.traverse("down")
 
