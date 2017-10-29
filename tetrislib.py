@@ -20,6 +20,8 @@ class Movement(Action):
         for i in range(self.repeat):
             if self.direction == "hard_drop":
                 board.doHardDrop()
+            elif self.direction == "rotate":
+                board.rotateActive()
             else:
                 board.traverse(self.direction)
         self.action_completed = True
