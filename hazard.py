@@ -186,6 +186,11 @@ class Board:
 
         self.blocks['S-block'] = Block(shapes)
 
+    def getAvailableBlocks(self):
+        """
+        Returns an array strings with names of available blocks.
+        """
+        return list(self.blocks.keys())
 
     def setActiveBlockFromString(self, shape_n):
         """
