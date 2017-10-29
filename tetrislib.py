@@ -46,6 +46,9 @@ class Block:
         """
         self.rotation_index = (self.rotation_index + 1) % len(self.rotations)
 
+    def getNextRotation(self):
+        return self.rotations[(self.rotation_index + 1) % len(self.rotations)]
+    
     def getSize(self):
         # Assume that we are measuring the current rotation
         temp = self.rotations[self.rotation_index]
