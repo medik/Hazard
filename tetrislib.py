@@ -201,6 +201,9 @@ class Board:
 
         self.blocks['S-block'] = Block(shapes)
 
+    def applyAction(self, action):
+        action.applyAction(self)
+
     def getAvailableBlocks(self):
         """
         Returns an array strings with names of available blocks.
