@@ -10,6 +10,15 @@ class Action:
         """
         pass
 
+class Movement(Action):
+    def __init__(self, d):
+        super()
+        self.direction = d
+
+    def applyAction(self, board):
+        board.traverse(self.direction)
+        self.action_completed = True
+
 class Block:
     def __init__(self, rot):
         self.rotation_index = 0
