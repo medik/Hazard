@@ -35,6 +35,13 @@ class Block:
         """
         self.rotation_index = (self.rotation_index + 1) % len(self.rotations)
 
+    def getSize(self):
+        # Assume that all rotations are of same size
+        y_ret = len(self.rotations[0])
+        x_ret = len(self.rotations[0][0])
+
+        return x_ret, y_ret
+
     def getBlock(self):
         return self.rotations[self.rotation_index]
 
