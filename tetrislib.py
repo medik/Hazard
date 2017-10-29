@@ -73,6 +73,7 @@ class Board:
                 x_arr.append(self.NULL_BLOCK)
             self.board.append(x_arr[:])
 
+    # Initialisation functions
     def initialiseBlocks(self):
         self.blocks = {}
 
@@ -211,44 +212,12 @@ class Board:
 
         self.blocks['S-block'] = Block(shapes)
 
-    def applyAction(self, action):
-        action.applyAction(self)
-
+    # Get methods
     def getAvailableBlocks(self):
         """
         Returns an array strings with names of available blocks.
         """
         return list(self.blocks.keys())
-
-    def setActiveBlockFromString(self, shape_n):
-        """
-        Take a string parameter and retrieve the shape from the dictionary containing all the shapes.
-        """
-        self.active_block = self.blocks[shape_n]
-
-    def setActiveBlock(self, shape):
-        """
-        Takes the parameter shape of class "Shape" and sets the active block to it.
-        """
-        self.active_block = shape
-
-    def mergeActiveWithBoard(self):
-        """
-        Merges the active block with the board. Returns the resulting board.
-        """
-        return self.addShape(self.active_block_position, self.active_block.getBlock())
-
-    def doHardDrop(self):
-        while self.collisionCheck("down") == False:
-            self.traverse("down")
-
-    def traverse(self, direction):
-        """
-        Will traverse the active block iff the direction won't collide. The
-        possible directions are: 'left', 'down' and 'right'.
-        """
-        if not self.collisionCheck(direction):
-            self.active_block_position = self.getNewXYCoordinateWithDirection(direction)
 
     def getNewXYCoordinateWithDirection(self, direction):
         """
@@ -271,6 +240,46 @@ class Board:
             y_new = y_old
 
         return x_new, y_new
+
+    # Set methods
+    def setActiveBlockFromString(self, shape_n):
+        """
+        Take a string parameter and retrieve the shape from the dictionary containing all the shapes.
+        """
+        self.active_block = self.blocks[shape_n]
+
+    def setActiveBlock(self, shape):
+        """
+        Takes the parameter shape of class "Shape" and sets the active block to it.
+        """
+        self.active_block = shape
+
+    def traverse(self, direction):
+        """
+        Will traverse the active block iff the direction won't collide. The
+        possible directions are: 'left', 'down' and 'right'.
+        """
+        if not self.collisionCheck(direction):
+            self.active_block_position = self.getNewXYCoordinateWithDirection(direction)
+
+    # Helper methods
+    def addShape(self, position, shape):
+        """
+        Adds a shape onto the board with a given position (which is a tuple of x, y).
+        """
+        x, y = position
+        active_x_size, active_y_size = self.active_block.getSize()
+
+        # Assume the shape size is 4x4
+        temp = copy.deepcopy(self.board)
+
+        for xprime in range(active_x_size):
+            for yprime in range(active_y_size):
+                temp[y+yprime][x+xprime] = temp[y+yprime][x+xprime] + shape[yprime][xprime]
+        return temp
+
+    def applyAction(self, action):
+        action.applyAction(self)
 
     def collisionCheck(self, direction):
         """
@@ -297,6 +306,26 @@ class Board:
 
         return False
 
+    def doHardDrop(self):
+        while self.collisionCheck("down") == False:
+            self.traverse("down")
+
+    def mergeActiveWithBoard(self):
+        """
+        Merges the active block with the board. Returns the resulting board.
+        """
+        return self.addShape(self.active_block_position, self.active_block.getBlock())
+
+    def printBoard(self, board):
+        """
+        Prints the board to the terminal.
+        """
+        for y_row in board:
+            temp = ""
+            for item in y_row:
+                temp += str(item)
+            print(temp)
+
     def update(self):
         """
         This method's purpose is to determine whether the active block
@@ -318,28 +347,3 @@ class Board:
             # increment active block position
             self.active_block_position = self.getNewXYCoordinateWithDirection('down')
         print()
-
-    def addShape(self, position, shape):
-        """
-        Adds a shape onto the board with a given position (which is a tuple of x, y).
-        """
-        x, y = position
-        active_x_size, active_y_size = self.active_block.getSize()
-
-        # Assume the shape size is 4x4
-        temp = copy.deepcopy(self.board)
-
-        for xprime in range(active_x_size):
-            for yprime in range(active_y_size):
-                temp[y+yprime][x+xprime] = temp[y+yprime][x+xprime] + shape[yprime][xprime]
-        return temp
-
-    def printBoard(self, board):
-        """
-        Prints the board to the terminal.
-        """
-        for y_row in board:
-            temp = ""
-            for item in y_row:
-                temp += str(item)
-            print(temp)
