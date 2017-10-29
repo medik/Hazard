@@ -375,7 +375,6 @@ class Board:
         should merge to the static one. Runs for each 'tick'.
         """
         b = self.mergeActiveWithBoard()
-        self.printBoard(b)
 
 
         x_old, y_old = self.active_block_position
@@ -395,4 +394,6 @@ class Board:
         else:
             # increment active block position
             self.active_block_position = self.getNewXYCoordinateWithDirection('down')
+
+        self.printBoard(b)
         print()
