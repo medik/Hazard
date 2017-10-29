@@ -266,6 +266,9 @@ class Board:
         """
         self.active_block = shape
 
+    def rotateActive(self):
+        self.active_block.rotate()
+
     def traverse(self, direction):
         """
         Will traverse the active block iff the direction won't collide. The
