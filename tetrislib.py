@@ -384,6 +384,12 @@ class Board:
             # Merge this board permanent
             self.board = b
 
+            # Check for tetris and remove them
+            non_zeroes = self.getNumberOfNonZeroesForEachRow()
+            non_zeroes_y = [ i for i in range(self.BOARD_Y_HEIGHT) if non_zeroes[i] >= self.BOARD_X_WIDTH ]
+            if len(non_zeroes_y) > 0:
+                self.removeRows(non_zeroes_y)
+
             # Reset position
             self.active_block_position = (self.X_SPAWN, self.Y_SPAWN)
         else:
