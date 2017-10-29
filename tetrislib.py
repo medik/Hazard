@@ -326,12 +326,13 @@ class Board:
         Adds a shape onto the board with a given position (which is a tuple of x, y).
         """
         x, y = position
+        active_x_size, active_y_size = self.active_block.getSize()
 
         # Assume the shape size is 4x4
         temp = copy.deepcopy(self.board)
 
-        for xprime in range(4):
-            for yprime in range(4):
+        for xprime in range(active_x_size):
+            for yprime in range(active_y_size):
                 temp[y+yprime][x+xprime] = temp[y+yprime][x+xprime] + shape[yprime][xprime]
         return temp
 
