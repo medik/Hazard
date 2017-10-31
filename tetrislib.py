@@ -257,14 +257,21 @@ class Board:
     def rotateActive(self):
         x_o, y_o = self.active_block_position
         x_block_size, y_block_size = self.active_block.getSize()
+        
         x_right_marginal = self.BOARD_X_WIDTH - x_o
+        y_bottom_marginal = self.BOARD_Y_HEIGHT - y_o
 
+        x_new = x_o
+        y_new = y_o
+        
         # If the marginal isn't enough, correct the postion with the difference
         if x_right_marginal < y_block_size:
             x_new = x_o - (y_block_size-x_right_marginal)
-            y_new = y_o
-            self.active_block_position = (x_new, y_new)
 
+        if y_bottom_marginal < x_block_size:
+            y_new = y_o - (x_block_size-y_bottom_marginal)
+
+        self.active_block_position = (x_new, y_new)
         self.active_block.rotate()
 
     def traverse(self, direction):
