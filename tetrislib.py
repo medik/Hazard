@@ -49,6 +49,13 @@ class Block:
     def getNextRotation(self):
         return self.rotations[(self.rotation_index + 1) % len(self.rotations)]
 
+    def getNextSize(self):
+        temp = self.rotations[(self.rotation_index + 1) % len(self.rotations)]
+        y_ret = len(temp)
+        x_ret = len(temp[0])
+
+        return x_ret, y_ret
+
     def getSize(self):
         # Assume that we are measuring the current rotation
         temp = self.rotations[self.rotation_index]
@@ -257,13 +264,13 @@ class Board:
     def rotateActive(self):
         x_o, y_o = self.active_block_position
         x_block_size, y_block_size = self.active_block.getSize()
-        
+
         x_right_marginal = self.BOARD_X_WIDTH - x_o
         y_bottom_marginal = self.BOARD_Y_HEIGHT - y_o
 
         x_new = x_o
         y_new = y_o
-        
+
         # If the marginal isn't enough, correct the postion with the difference
         if x_right_marginal < y_block_size:
             x_new = x_o - (y_block_size-x_right_marginal)
