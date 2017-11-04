@@ -279,8 +279,13 @@ class Board:
         if y_bottom_marginal < x_block_size:
             y_new = y_o - (x_block_size-y_bottom_marginal)
 
-        self.active_block_position = (x_new, y_new)
-        self.active_block.rotate()
+        # Do not allow rotation if the next rotation will collide with a sticky block
+        nextRotBlock = self.active_block.getNextRotation()
+        pos = (x_new, y_new)
+
+        if not self.collisionCheckWithShapeAndPos(pos, nextRotBlock):
+            self.active_block_position = (x_new, y_new)
+            self.active_block.rotate()
 
     def traverse(self, direction):
         """
