@@ -47,8 +47,9 @@ class Block:
         self.rotation_index = (self.rotation_index + 1) % len(self.rotations)
 
     def getNextRotation(self):
-        return self.rotations[(self.rotation_index + 1) % len(self.rotations)]
-
+        ret = copy.deepcopy(self)
+        ret.rotate()
+        return ret
     def getNextSize(self):
         temp = self.rotations[(self.rotation_index + 1) % len(self.rotations)]
         y_ret = len(temp)
