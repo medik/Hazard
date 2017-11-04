@@ -336,6 +336,21 @@ class Board:
 
         return False
 
+    def collisionCheckWithShape(self, position, shape):
+        """ Apply a given shape onto the board with a given coordinate, then,
+        check whether there is a collision or not. """
+
+        # Let position be a tuple
+        x, y = position
+        shape_x_width, shape_y_width = shape.getSize()
+
+        shapeArr = shape.getBlock()
+        for xprime in range(shape_x_width):
+            for yprime in range(shape_y_width):
+                if self.board[y+yprime][x+xprime] > 0 and shapeArr[yprime][xprime] > 0:
+                    return True
+        return False
+
     def doHardDrop(self):
         """
         Makes the active block go directly to the bottom of the board.
