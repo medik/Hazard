@@ -337,7 +337,7 @@ class Board:
 
         return False
 
-    def collisionCheckWithShape(self, position, shape):
+    def collisionCheckWithShapeAndPos(self, position, shape):
         """ Apply a given shape onto the board with a given coordinate, then,
         check whether there is a collision or not. """
 
