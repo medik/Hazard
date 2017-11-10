@@ -13,42 +13,131 @@ responses.
 
 ## Client to Server
 
-### Start the game
+The client is sending to the server a UTF-8 string with the following
+format:
+
+```
+{ 'version': '0.1', 'type': <string>, 'value': ...  }
+```
+
+Where `version` is the protocol version number, `type` the type of
+command, and the `value` the corresponding value which the command
+should handle (see the description below).
+
+The following commands should be available (not in a particular order):
+```
+get_board
+
+get_active_block
+move_active_block
+
+set_name
+
+start_game
+end_game
+```
+
+The server will answer in this format:
+```
+{ 'version': '0.1',
+  'response_type': <string>,
+  'value': ...
+}
+```
+
+Their corresponding values are:
+
+### get_board
 Send:
 ```
-{'my_name': <string>, 'start_game': true}
+...
+'value': <boolean> }
 ```
 Response:
-None, ask the server for the board.
 
-### Get the board
+{
+  'version': '0.1',
+  'response_type': 'board',
+  'value': <int_array>
+}
+
+### get_active_block
 Send:
-```
-{'get_board': true}
-```
+...
+'value': <boolean>}
 
 Response:
+{
+ 'version': '0.1',
+ 'response_type': 'active_block',
+ 'value': <string>
+}
+
+where `<string>` can be one of these:
 ```
-{ 'board': ..., 'active_block': ..., 'next_block': ..., 'tick': <integer> }
+L-block
+RevL-block
+I-block
+Z-block
+RevZ-block
+T-block
+S-block
 ```
 
-### Movement
+### move_active_block
 Send:
 ```
-{ 'movement': <movement_str> }
+...
+'value': <string> }
 ```
-where `<movement_str>` is a string with values `left`,`right`, `rotate` or `hard_drop`.
+where the string is either `left`, `right`, `rotate` or `hard_drop`.
 
 Response:
-```
-{ 'status': <status_int> }
-```
-where `<status_int>` is a integer with value 1 (ok) or 0 (error).
 
-## Server to Client
+{ 'version': '0.1',
+  'response_type': 'status',
+  'value': <int>
+}
+1 for ok, or 0 for error.
 
-### Game over
+### set_name
 Send:
 ```
-{ 'game_over': true }
+...
+'value': <string> }
+
+Response:
+
+{ 'version': '0.1',
+  'response_type': 'status',
+  'value': <int>
+}
+1 for ok, or 0 for error.
+
+### start_game
+Send:
 ```
+...
+'value': <boolean> }
+
+Response:
+
+{ 'version': '0.1',
+  'response_type': 'status',
+  'value': <int>
+}
+1 for ok, or 0 for error.
+
+### end_game
+Send:
+```
+...
+'value': <boolean> }
+
+Response:
+
+{ 'version': '0.1',
+  'response_type': 'status',
+  'value': <int>
+}
+1 for ok, or 0 for error.
