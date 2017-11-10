@@ -54,12 +54,13 @@ Send:
 'value': <boolean> }
 ```
 Response:
-
+```
 {
   'version': '0.1',
   'response_type': 'board',
   'value': <int_array>
 }
+```
 
 ### get_active_block
 Send:
@@ -67,11 +68,13 @@ Send:
 'value': <boolean>}
 
 Response:
+```
 {
  'version': '0.1',
  'response_type': 'active_block',
  'value': <string>
 }
+```
 
 where `<string>` can be one of these:
 ```
@@ -93,11 +96,12 @@ Send:
 where the string is either `left`, `right`, `rotate` or `hard_drop`.
 
 Response:
-
+```
 { 'version': '0.1',
   'response_type': 'status',
   'value': <int>
 }
+```
 1 for ok, or 0 for error.
 
 ### set_name
@@ -105,13 +109,15 @@ Send:
 ```
 ...
 'value': <string> }
+```
 
 Response:
-
+```
 { 'version': '0.1',
   'response_type': 'status',
   'value': <int>
 }
+```
 1 for ok, or 0 for error.
 
 ### start_game
@@ -119,13 +125,15 @@ Send:
 ```
 ...
 'value': <boolean> }
+```
 
 Response:
-
+```
 { 'version': '0.1',
   'response_type': 'status',
   'value': <int>
 }
+```
 1 for ok, or 0 for error.
 
 ### end_game
@@ -133,11 +141,13 @@ Send:
 ```
 ...
 'value': <boolean> }
+```
 
 Response:
-
+```
 { 'version': '0.1',
   'response_type': 'status',
   'value': <int>
 }
+```
 1 for ok, or 0 for error.
