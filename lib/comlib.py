@@ -10,11 +10,21 @@ class GameFacade:
         self.board = tetrislib.Board()
         self.next_block = None           # this is a string
 
-    def parseJSON(self, json):
-        """ parsing json and do useful things with it """
-
+    def parseAction(self, action):
+        """ Assume a dictionary with an action as specified in com.rst """
+        a_type = action["type"]
         
-
+        if a_type == "get_board":
+            return
+        elif a_type == "get_active_block":
+            return
+        elif a_type == "set_name":
+            return
+        elif a_type == "start_game":
+            return
+        elif a_type == "end_game":
+            return
+    
     def generateNextBlock(self):
         avail_blocks = self.board.getAvailableBlocks()
         next_block_i = random.randint(0, len(avail_blocks)-1)
