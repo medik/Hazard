@@ -209,6 +209,10 @@ class Board:
         self.blocks['S-block'] = Block(shapes)
 
     # Get methods
+    def getBoard(self):
+        ret = copy.deepcopy(self.board)
+        return ret
+    
     def getAvailableBlocks(self):
         """
         Returns an array strings with names of available blocks.
