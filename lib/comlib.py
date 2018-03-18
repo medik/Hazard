@@ -4,26 +4,46 @@ import json
 import random
 import tetrislib
 
-class GameFacade:
+class GameServer:
+    PROTOCOL_VERSION = "0.3"
     def __init__(self):
         # Create an internal tetrisboard
+        self.client_name = ""
+
+        self.game_started = False
+        self.game_over = False
+        
         self.board = tetrislib.Board()
         self.next_block = None           # this is a string
+
+    def getBoard(self):
+        return self.board
+
+    def createResponse(self, response_t, value):
+        ret = {}
+        ret["version"] = self.PROTOCOL_VERSION
+        ret["response_type"] = response_t
+        ret["value"] = value
+        return ret
+
+    def createJSONResponse(self, response_t, value):
+        return json.dumps(self.createResponse(response_t, value))
 
     def parseAction(self, action):
         """ Assume a dictionary with an action as specified in com.rst """
         a_type = action["type"]
+        a_val = action["value"]
         
         if a_type == "get_board":
-            return
-        elif a_type == "get_active_block":
-            return
+            b = self.board.getBoard()
+            return self.createJSONResponse("board", b)
+        elif a_type == "get_active_shape":
+            return self.createJSONResponse("active_shape", self.get)
         elif a_type == "set_name":
-            return
-        elif a_type == "start_game":
-            return
-        elif a_type == "end_game":
-            return
+            return self.createJSONResponse("get_set_name_response", "set_name")
+        elif a_type == "start_game" and a_val == True:
+            self.game_started = True
+            print("The game has been started")
     
     def generateNextBlock(self):
         avail_blocks = self.board.getAvailableBlocks()
