@@ -5,7 +5,7 @@ import random
 import tetrislib
 
 class GameServer:
-    PROTOCOL_VERSION = "0.3"
+    PROTOCOL_VERSION = "0.3.1"
     def __init__(self):
         # Create an internal tetrisboard
         self.client_name = ""
@@ -43,6 +43,11 @@ class GameServer:
         elif a_type == "move_active_shape":
             self.getBoard().traverse(a_val)
             return self.createJSONResponse("status", 1)
+        elif a_type == "get_queued_powerup":
+            return self.createJSONResponse("queued_powerup", "Nothing")
+        elif a_type == "use_queued_powerup":
+            b = self.board.getBoard()
+            return self.createJSONResponse("board", b)
         elif a_type == "set_name":
             self.client_name = a_val
             return self.createJSONResponse("status", 1)
