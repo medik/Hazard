@@ -61,10 +61,22 @@ class GameServer:
     
 
 def startServer():
-    async def echo(websocket, path):
+    current_games = []
+
+    async def incommingConHandler(websocket, path):
+        """ Handles all traffic in a single thread """
+        g = GameServer()
+        
         async for message in websocket:
-            print(message)
+            # Assume a JSON
+            s = json.loads(message)
+            g.parseAction(s)
 
     asyncio.get_event_loop().run_until_complete(
-    websockets.serve(echo, 'localhost', 7441))
+        websockets.serve(incommingConHandler, 'localhost', 7441))
+    
     asyncio.get_event_loop().run_forever()
+
+
+if __name__ == "__main__":
+    startServer()
