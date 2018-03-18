@@ -1,3 +1,12 @@
+"""""
+tetrislib.py
+
+Documentation is found at https://knark.io/tetrisslinger-docs/
+
+Olof Sjödin <me@olofsjodin.se> Copyright (C) 2017-2018
+
+"""""
+
 import copy
 
 class Action:
