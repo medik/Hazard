@@ -1,5 +1,5 @@
 """""
-tetrislib.py v 0.1
+tetrislib.py v 0.2
 
 Documentation is found at https://knark.io/tetrisslinger-docs/
 
@@ -97,6 +97,7 @@ class Board:
 
         self.board = []
         self.active_block = None
+        self.active_block_str = ""
         self.active_block_position = (self.X_SPAWN, self.Y_SPAWN)
 
         for y_i in range(self.BOARD_Y_HEIGHT):
@@ -218,6 +219,9 @@ class Board:
         self.blocks['S-block'] = Block(shapes)
 
     # Get methods
+    def getActiveBlock(self):
+        return self.active_block_str
+    
     def getAvailableBlocks(self):
         """
         Returns an array strings with names of available blocks.
@@ -257,17 +261,20 @@ class Board:
             ret.append(non_zeroes_count)
 
         return ret
+
     # Set methods
     def setActiveBlockFromString(self, shape_n):
         """
         Take a string parameter and retrieve the shape from the dictionary containing all the shapes.
         """
+        
         temp = copy.deepcopy(self.blocks[shape_n])
         self.active_block = temp
-
+        self.active_block_str = shape_n
+        
     def setActiveBlock(self, shape):
         """
-        Takes the parameter shape of class "Shape" and sets the active block to it.
+        Takes the parameter shape of class "Shape" and sets the active block to it. Do not use this.
         """
         self.active_block = shape
 
