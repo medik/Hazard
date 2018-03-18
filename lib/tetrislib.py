@@ -1,3 +1,12 @@
+"""""
+tetrislib.py v 0.3
+
+Documentation is found at https://knark.io/tetrisslinger-docs/
+
+Olof Sjödin <me@olofsjodin.se> Copyright (C) 2017-2018
+
+"""""
+
 import copy
 
 class Action:
@@ -89,6 +98,7 @@ class Board:
 
         self.board = []
         self.active_shape = None
+        self.active_shape_str = ""
         self.active_shape_position = (self.X_SPAWN, self.Y_SPAWN)
 
         for y_i in range(self.BOARD_Y_HEIGHT):
@@ -253,7 +263,7 @@ class Board:
             ret.append(non_zeroes_count)
 
         return ret
-    
+
     # Set methods
     def setActiveShapeFromString(self, shape_n):
         """
@@ -264,8 +274,11 @@ class Board:
 
     def setActiveShape(self, shape):
         """
-        Takes the parameter shape of class "Shape" and sets the active shape to it.
+        Takes the parameter shape of class "Shape" and sets the active block to it. Do not use this.
         """
+        
+        temp = copy.deepcopy(self.blocks[shape_n])
+        self.active_shape_str = shape_n
         self.active_shape = shape
 
     def rotateActive(self):
