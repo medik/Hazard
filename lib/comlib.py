@@ -38,12 +38,20 @@ class GameServer:
             b = self.board.getBoard()
             return self.createJSONResponse("board", b)
         elif a_type == "get_active_shape":
-            return self.createJSONResponse("active_shape", self.get)
+            active_shape = self.getBoard().active_shape_str
+            return self.createJSONResponse("active_shape", active_shape)
+        elif a_type == "move_active_shape":
+            self.getBoard().traverse(a_val)
+            return self.createJSONResponse("status", 1)
         elif a_type == "set_name":
-            return self.createJSONResponse("get_set_name_response", "set_name")
+            self.client_name = a_val
+            return self.createJSONResponse("status", 1)
         elif a_type == "start_game" and a_val == True:
             self.game_started = True
-            print("The game has been started")
+            return self.createJSONResponse("status", 1)
+        elif a_type == "end_game" and a_val == True:
+            self.game_over = True
+            return self.createJSONResponse("status", 1)
     
     def generateNextBlock(self):
         avail_blocks = self.board.getAvailableBlocks()
