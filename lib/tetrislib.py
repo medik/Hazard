@@ -1,5 +1,5 @@
 """""
-tetrislib.py v 0.3
+tetrislib.py v0.3
 
 Documentation is found at https://knark.io/tetrisslinger-docs/
 
