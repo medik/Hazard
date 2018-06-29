@@ -270,7 +270,9 @@ class Board:
         Take a string parameter and retrieve the shape from the dictionary containing all the shapes.
         """
         temp = copy.deepcopy(self.shapes[shape_n])
+        self.active_shape_str = shape_n
         self.active_shape = temp
+
 
     def setActiveShape(self, shape):
         """
