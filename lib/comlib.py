@@ -3,6 +3,7 @@ import websockets
 import json
 import random
 import tetrislib
+import threading.Timer as Timer
 
 class GameServer:
     """ 
@@ -21,6 +22,10 @@ class GameServer:
         
         self.board = tetrislib.Board()
         self.next_block = None           # this is a string
+
+        # This is a float which says how long the tick should be in seconds
+        self.tick_timer = 1.0
+        self.timer = Timer(self.tick_timer, self.update)
 
     def getBoard(self):
         return self.board
@@ -66,9 +71,15 @@ class GameServer:
         elif a_type == "start_game" and a_val == True:
             self.game_started = True
 
+            # Generate active shape
             rand_shape_str = self.generateRandomShape()
             print("Set shape to " + rand_shape_str)
             self.board.setActiveShapeFromString(rand_shape_str)
+
+            # TODO: Generate next shape
+
+            # Start Timer:
+            self.timer.start()
             
             return self.createJSONResponse("status", 1)
 
@@ -86,6 +97,9 @@ class GameServer:
 
     def update(self):
         self.board.update()
+        if not self.board.game_over:
+            self.timer = Timer(self.tick_timer, self.update)
+            
     
 
 def startServer():
