@@ -5,6 +5,12 @@ import random
 import tetrislib
 
 class GameServer:
+    """ 
+    The purpose of the GameServer class is to:
+    * Control the Board via commands using JSON-objects
+    * Determine the rules of the game
+    """
+    
     PROTOCOL_VERSION = "0.3.1"
     def __init__(self):
         # Create an internal tetrisboard
@@ -37,32 +43,49 @@ class GameServer:
         if a_type == "get_board":
             b = self.board.getBoard()
             return self.createJSONResponse("board", b)
+
         elif a_type == "get_active_shape":
             active_shape = self.getBoard().active_shape_str
             return self.createJSONResponse("active_shape", active_shape)
+
         elif a_type == "move_active_shape":
             self.getBoard().traverse(a_val)
             return self.createJSONResponse("status", 1)
+        
         elif a_type == "get_queued_powerup":
             return self.createJSONResponse("queued_powerup", "Nothing")
+
         elif a_type == "use_queued_powerup":
             b = self.board.getBoard()
             return self.createJSONResponse("board", b)
+
         elif a_type == "set_name":
             self.client_name = a_val
             return self.createJSONResponse("status", 1)
+
         elif a_type == "start_game" and a_val == True:
             self.game_started = True
+
+            rand_shape_str = self.generateRandomShape()
+            print("Set shape to " + rand_shape_str)
+            self.board.setActiveShapeFromString(rand_shape_str)
+            
             return self.createJSONResponse("status", 1)
+
         elif a_type == "end_game" and a_val == True:
             self.game_over = True
             return self.createJSONResponse("status", 1)
-    
-    def generateNextBlock(self):
-        avail_blocks = self.board.getAvailableBlocks()
-        next_block_i = random.randint(0, len(avail_blocks)-1)
-        self.next_block = avail_blocks[next_block_i]
-    
+
+    def generateRandomShape(self):
+        """ Returns a string of an available shape"""
+        avail_shapes = self.board.getAvailableShapes()
+        return avail_shapes[random.randint(0, len(avail_shapes)-1)]
+        
+    def generateNextShape(self):
+        self.next_shape = self.generateRandomShape()
+
+    def update(self):
+        self.board.update()
     
 
 def startServer():
@@ -75,7 +98,10 @@ def startServer():
         async for message in websocket:
             # Assume a JSON
             s = json.loads(message)
-            g.parseAction(s)
+            print(s["type"] + ": '" + str(s["value"]) + "'")
+            response = g.parseAction(s)
+            await websocket.send(response)
+            
 
     asyncio.get_event_loop().run_until_complete(
         websockets.serve(incommingConHandler, 'localhost', 7441))
