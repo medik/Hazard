@@ -5,6 +5,7 @@ import random
 import tetrislib
 import threading
 import logging
+import functools
 
 class GameServer:
     PROTOCOL_VERSION = "0.3.1"
@@ -58,7 +59,8 @@ class GameServer:
             return self.createJSONResponse("status", 1)
         elif a_type == "start_game" and a_val == True:
             self.game_started = True
-            return self.createJSONResponse("status", 1)
+            self.startGame()
+            return self.createJSONResponse("game_started", 1)
         elif a_type == "end_game" and a_val == True:
             self.game_over = True
             return self.createJSONResponse("status", 1)
@@ -68,12 +70,12 @@ class GameServer:
         next_block_i = random.randint(0, len(avail_shapes)-1)
         self.next_block = avail_blocks[next_block_i]
 
-    async def gotoNextTick(self, websocket):
+    def gotoNextTick(self, websocket):
         self.board.update()
         
         board_json = self.createJSONResponse("board",self.board.mergeActiveWithBoard())        
         print(board_json)
-        await websocket.send(board_json)
+        asyncio.ensure_future(websocket.send(board_json))
 
     def startGame(self):
         # Generate active shape
@@ -82,28 +84,38 @@ class GameServer:
         self.board.setActiveShapeFromString(avail_shapes[i])
 
 
+
 def startServer():
     logging.basicConfig(level=logging.DEBUG)
-    current_games = []
+    connected_ws = set()
+    
+    def updateNextTick(g, wait, websocket, path):
+        loop = asyncio.get_event_loop()
+        loop.call_soon(functools.partial(g.gotoNextTick, websocket))
+        time = loop.time()
+        loop.call_at(time + wait, functools.partial(updateNextTick, g, wait, websocket, path))
+    
+    async def main(websocket, path):
+        connected_ws.add(websocket)
+        loop = asyncio.get_event_loop()
 
-    async def incommingConHandler(websocket, path):
         g = GameServer(websocket)
-        g.startGame()
+        wait = 1.0
         
         while True:
-            await g.gotoNextTick(websocket)
-            await asyncio.sleep(1)
             msg = await websocket.recv()
             s = json.loads(msg)
             print(s)
+            if s["type"] == "start_game" and s["value"] == 1:
+                time = loop.time()
+                loop.call_at(time + 1.0, functools.partial(updateNextTick, g, wait, websocket, path))
             ans = g.parseAction(s)
             await websocket.send(ans)
-
+            
+            
     asyncio.get_event_loop().set_debug(True)
-
     asyncio.get_event_loop().run_until_complete(
-        websockets.serve(incommingConHandler, 'localhost', 7441))
-    
+        websockets.serve(main, 'localhost', 7441))
     asyncio.get_event_loop().run_forever()
 
 
