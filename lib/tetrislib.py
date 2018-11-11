@@ -82,7 +82,7 @@ class Board:
     BOARD_X_WIDTH = 10
     BOARD_Y_HEIGHT = 20
 
-    X_SPAWN = 0
+    X_SPAWN = 4
     Y_SPAWN = 0
 
     NULL_BLOCK = 0
