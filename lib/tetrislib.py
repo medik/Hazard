@@ -311,6 +311,13 @@ class Board:
         Will traverse the active shape iff the direction won't collide. The
         possible directions are: 'left', 'down' and 'right'.
         """
+        if direction == "hard_drop":
+            self.doHardDrop()
+            return
+        elif direction == "rotate":
+            self.rotateActive()
+            return
+        
         if not self.collisionCheck(direction):
             self.active_shape_position = self.getNewXYCoordinateWithDirection(direction)
 
@@ -382,6 +389,7 @@ class Board:
         """
         while self.collisionCheck("down") == False:
             self.traverse("down")
+        self.update()
 
     def fillNullRowsFromTop(self, board, n):
         """
