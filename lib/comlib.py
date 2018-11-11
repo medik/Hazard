@@ -3,10 +3,12 @@ import websockets
 import json
 import random
 import tetrislib
+import threading
+import logging
 
 class GameServer:
     PROTOCOL_VERSION = "0.3.1"
-    def __init__(self):
+    def __init__(self, ws):
         # Create an internal tetrisboard
         self.client_name = ""
 
@@ -15,6 +17,9 @@ class GameServer:
         
         self.board = tetrislib.Board()
         self.next_block = None           # this is a string
+
+        self.tick_timer = 1
+        self.websocket = ws
 
     def getBoard(self):
         return self.board
@@ -58,24 +63,43 @@ class GameServer:
             self.game_over = True
             return self.createJSONResponse("status", 1)
     
-    def generateNextBlock(self):
-        avail_blocks = self.board.getAvailableBlocks()
-        next_block_i = random.randint(0, len(avail_blocks)-1)
+    def generateNextShape(self):
+        avail_shapes = self.board.getAvailableShapes()
+        next_block_i = random.randint(0, len(avail_shapes)-1)
         self.next_block = avail_blocks[next_block_i]
-    
-    
+
+    async def gotoNextTick(self, websocket):
+        self.board.update()
+        
+        board_json = self.createJSONResponse("board",self.board.mergeActiveWithBoard())        
+        print(board_json)
+        await websocket.send(board_json)
+
+    def startGame(self):
+        # Generate active shape
+        avail_shapes = self.board.getAvailableShapes()
+        i = random.randint(0, len(avail_shapes)-1)
+        self.board.setActiveShapeFromString(avail_shapes[i])
+
 
 def startServer():
+    logging.basicConfig(level=logging.DEBUG)
     current_games = []
 
     async def incommingConHandler(websocket, path):
-        """ Handles all traffic in a single thread """
-        g = GameServer()
+        g = GameServer(websocket)
+        g.startGame()
         
-        async for message in websocket:
-            # Assume a JSON
-            s = json.loads(message)
-            g.parseAction(s)
+        while True:
+            await g.gotoNextTick(websocket)
+            await asyncio.sleep(1)
+            msg = await websocket.recv()
+            s = json.loads(msg)
+            print(s)
+            ans = g.parseAction(s)
+            await websocket.send(ans)
+
+    asyncio.get_event_loop().set_debug(True)
 
     asyncio.get_event_loop().run_until_complete(
         websockets.serve(incommingConHandler, 'localhost', 7441))
