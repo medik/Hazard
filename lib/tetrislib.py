@@ -459,5 +459,6 @@ class Board:
             # increment active shape position
             self.active_shape_position = self.getNewXYCoordinateWithDirection('down')
 
-        self.printBoard(b)
-        print()
+        # debug
+        #self.printBoard(b)
+        #print()
