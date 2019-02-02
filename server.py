@@ -48,7 +48,7 @@ class GameServer:
             return self.createJSONResponse("active_shape", active_shape)
         elif a_type == "move_active_shape":
             self.getBoard().traverse(a_val)
-            return self.createJSONResponse("status", 1)
+            return self.createJSONResponse("board", self.board.mergeActiveWithBoard())
         elif a_type == "get_queued_powerup":
             return self.createJSONResponse("queued_powerup", "Nothing")
         elif a_type == "use_queued_powerup":
