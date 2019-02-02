@@ -1,7 +1,10 @@
+/**
+ * The Game Screen
+ */
+
 "use strict";
 
 var comVersion = "0.3";
-
 var game = new Kiwi.Game(null, "Hello World", null, { renderer: Kiwi.RENDERER_CANVAS });
 var myState = new Kiwi.State("myState");
 var name = "";
@@ -27,7 +30,8 @@ connection.sendAction = function(typeStr, valueStr) {
 };
 
 /*
-* Handler for incoming messages from the TetrisSlinger server. Do not call from this application.
+* Handler for incoming messages from the TetrisSlinger server. Do not
+* call from this application.
 * @param {Event} e
 */
 connection.onmessage = function(e){
@@ -43,11 +47,6 @@ connection.onmessage = function(e){
         case "board":
             playGrid.setBoard(message.value);
             break;
-/*
-        case "active_shape":
-            playGrid.resetActiveShape(message.value);
-            break;
-*/
         case "queued_powerup":
             myState.queuedPowerup = new Powerup(this.state, message.value);
             break;
@@ -64,7 +63,7 @@ connection.onmessage = function(e){
 * controls used by the library.
 */
 
-myState.preload = function(){
+myState.preload = function() {
     /*
      * Initialise image resources
      */
@@ -148,23 +147,6 @@ myState.create = function(){
 
 myState.update = function(){
     Kiwi.State.prototype.update.call(this);
-
-    // Update game logic
-    //playGrid.update();
-
-    // TODO remove this, end_game should be sent by the server
-    /*
-    if (playGrid.gameOver) {
-        connection.sendAction("end_game", true);
-    }
-    */
-
-/*
-    // TODO don't ask for active shape when you are waiting for one!
-    if (playGrid.waitForActiveShape) {
-        connection.sendAction("get_active_shape", true);
-    }
-*/
 
     // Render the blocks
     for (let i=0;i<playGrid.sizeY;i+=1) {
